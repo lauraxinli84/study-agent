@@ -307,7 +307,7 @@ per turn. I flagged this in §g below.
 ## h. Deployment
 
 - **Platform**: Hugging Face Spaces, **Docker SDK**, free CPU tier.
-- **URL**: *(fill in once the Space is deployed)*.
+- **URL**: https://huggingface.co/spaces/stevenlx96/study-agent
 - **Config**: `README.md` YAML frontmatter specifies `sdk: docker` and
   `app_port: 7860`. A `Dockerfile` in the repo root builds a Python 3.11
   slim image, installs `requirements.txt` (which includes

@@ -25,7 +25,7 @@ Built for a class final project demonstrating:
 
 ## Live demo
 
-*(Fill in your Space URL here once deployed.)*
+https://huggingface.co/spaces/stevenlx96/study-agent
 
 ## What makes it "agentic"
 
