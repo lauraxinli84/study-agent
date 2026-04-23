@@ -3,7 +3,7 @@
 An agentic LLM-based web application that helps a student learn from their own
 uploaded course materials.
 
-- **Live demo:** https://huggingface.co/spaces/stevenlx96/study-agent
+- **Live demo:** https://huggingface.co/spaces/lauraxinli84/study-agent
 - **Source:** GitHub repository (see submission)
 
 ---
@@ -313,7 +313,7 @@ per turn. This is flagged in the *What I'd improve* list below.
 ## h. Deployment
 
 - **Platform**: Hugging Face Spaces, **Docker SDK**, free CPU tier.
-- **URL**: https://huggingface.co/spaces/stevenlx96/study-agent
+- **URL**: https://huggingface.co/spaces/lauraxinli84/study-agent
 - **Config**: `README.md` YAML frontmatter specifies `sdk: docker` and
   `app_port: 7860`. A `Dockerfile` in the repo root builds a Python 3.11
   slim image, installs `requirements.txt` (which includes

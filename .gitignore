@@ -11,3 +11,4 @@ data/vectorstore/*
 .streamlit/secrets.toml
 .DS_Store
 .claude/
+docs/*.pdf

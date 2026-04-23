@@ -25,7 +25,7 @@ Highlights:
 
 ## Live demo
 
-https://huggingface.co/spaces/stevenlx96/study-agent
+https://huggingface.co/spaces/lauraxinli84/study-agent
 
 ### Quick test path (≈ 2 minutes)
 
