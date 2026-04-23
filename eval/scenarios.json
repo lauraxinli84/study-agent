@@ -1,0 +1,86 @@
+[
+  {
+    "id": "s1_materials_question",
+    "question": "According to the uploaded notes, what is gradient descent?",
+    "expected_tools": ["search_course_materials"],
+    "requires_uploads": true,
+    "notes": "Clear materials-grounded question."
+  },
+  {
+    "id": "s2_materials_followup",
+    "question": "Can you explain the chain rule using the uploaded textbook chapter?",
+    "expected_tools": ["search_course_materials"],
+    "requires_uploads": true,
+    "notes": "Explicit reference to uploaded materials."
+  },
+  {
+    "id": "s3_current_events",
+    "question": "Who won the most recent Nobel Prize in Physics?",
+    "expected_tools": ["web_search"],
+    "requires_uploads": false,
+    "notes": "Time-sensitive; cannot be in stable training data."
+  },
+  {
+    "id": "s4_outside_knowledge",
+    "question": "What is the latest version of PyTorch as of 2026?",
+    "expected_tools": ["web_search"],
+    "requires_uploads": false,
+    "notes": "Recent external fact."
+  },
+  {
+    "id": "s5_arithmetic",
+    "question": "What is sqrt(2) times log(1000) to 4 decimal places?",
+    "expected_tools": ["calculator"],
+    "requires_uploads": false,
+    "notes": "Pure computation."
+  },
+  {
+    "id": "s6_multistep_math_in_materials",
+    "question": "Using the learning rate from the notes, if we do 50 gradient steps of size 0.01, how far do we move in the worst case?",
+    "expected_tools": ["search_course_materials", "calculator"],
+    "requires_uploads": true,
+    "notes": "Requires retrieval THEN computation -- tests chaining."
+  },
+  {
+    "id": "s7_quiz_request",
+    "question": "Quiz me on backpropagation.",
+    "expected_tools": ["generate_quiz"],
+    "requires_uploads": true,
+    "notes": "Explicit quiz trigger."
+  },
+  {
+    "id": "s8_quiz_alt_phrasing",
+    "question": "Can you test me on the main ideas of chapter 2?",
+    "expected_tools": ["generate_quiz"],
+    "requires_uploads": true,
+    "notes": "Quiz phrased as 'test me'."
+  },
+  {
+    "id": "s9_no_tool_needed",
+    "question": "What are some good study habits for learning a new topic?",
+    "expected_tools": [],
+    "requires_uploads": false,
+    "notes": "General advice; agent should answer without tools."
+  },
+  {
+    "id": "s10_no_tool_conversational",
+    "question": "Hi! What can you help me with?",
+    "expected_tools": [],
+    "requires_uploads": false,
+    "notes": "Greeting; no tool needed."
+  },
+  {
+    "id": "s11_ambiguous_prefers_materials",
+    "question": "Explain the main loss function we covered.",
+    "expected_tools": ["search_course_materials"],
+    "requires_uploads": true,
+    "notes": "'We covered' implies uploaded materials."
+  },
+  {
+    "id": "s12_negative_no_web_for_stable_fact",
+    "question": "What is the capital of France?",
+    "expected_tools": [],
+    "requires_uploads": false,
+    "notes": "Stable world fact; no tool needed. If agent uses web_search here it's over-tooling."
+  }
+]

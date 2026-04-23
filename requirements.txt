@@ -1,0 +1,11 @@
+# NOTE: For Hugging Face Spaces Streamlit SDK, omit streamlit from here --
+# HF installs the version declared in the README.md frontmatter (`sdk_version`).
+# If deploying elsewhere (Streamlit Cloud, local), uncomment the next line.
+# streamlit==1.38.0
+openai==1.54.3
+pypdf==5.1.0
+numpy==1.26.4
+scikit-learn==1.5.2
+duckduckgo-search==6.3.0
+python-dotenv==1.0.1
+tiktoken==0.8.0
