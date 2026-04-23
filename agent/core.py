@@ -95,7 +95,20 @@ def run_agent(
     """Execute one user turn. Returns the final answer plus a step trace."""
     tracer = Tracer(user_input=user_message)
     steps: list[dict] = []
-    messages: list[dict] = [{"role": "system", "content": SYSTEM_PROMPT}]
+    if store.is_empty():
+        inventory = "No documents are currently indexed."
+    else:
+        inventory = (
+            "Documents currently indexed: "
+            + ", ".join(store.doc_names())
+            + ". If the question is plausibly about any of them, try "
+            "search_course_materials FIRST. For general conversation, "
+            "stable world facts (e.g. capital cities), or topics clearly "
+            "outside the uploaded material, answer directly without any tool."
+        )
+    messages: list[dict] = [
+        {"role": "system", "content": SYSTEM_PROMPT + "\n\n" + inventory}
+    ]
     if history:
         # Pass prior turns (user + assistant text only; we don't replay old tool calls)
         for h in history:
