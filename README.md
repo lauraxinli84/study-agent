@@ -7,7 +7,7 @@ sdk: docker
 app_port: 7860
 pinned: false
 license: mit
-short_description: An agentic LLM study assistant grounded in your course materials.
+short_description: Agentic LLM study assistant grounded in your uploads.
 ---
 
 # 📚 Study Agent
