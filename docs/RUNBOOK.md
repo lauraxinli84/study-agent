@@ -80,38 +80,32 @@ Do **not** commit `.env` or the `data/traces.db` — both are already in
 You can commit `eval/results.csv` after running the eval so the grader sees
 your numbers.
 
-## Step 5 — Deploy to Hugging Face Spaces
+## Step 5 — Deploy to Hugging Face Spaces (Docker SDK)
+
+> HF recently dropped Streamlit from the new-Space SDK picker. We use the
+> **Docker** SDK instead — the repo ships with a `Dockerfile` that runs
+> Streamlit on port 7860 (HF's default Docker port).
 
 1. Sign up at https://huggingface.co (free).
-2. Click your avatar → **New Space**.
-3. Space name: `study-agent` (or whatever). SDK: **Streamlit**. License: MIT.
-   Hardware: free CPU. Visibility: Public.
-4. Clone the Space's Git repo locally:
+2. Click your avatar → **New Space**. Name: `study-agent` (or whatever).
+   SDK: **Docker**. Template: **Blank**. License: MIT. Hardware: free CPU.
+   Visibility: Public.
+3. In the new Space: **Settings → Variables and secrets → New secret**.
+   Name: `OPENAI_API_KEY`. Value: your key. Save.
+4. From *this* repo (your GitHub clone), add the Space as a second remote
+   and push:
    ```bash
-   git clone https://huggingface.co/spaces/<your-username>/study-agent hf-space
+   git remote add hf https://huggingface.co/spaces/<your-hf-username>/study-agent
+   git push hf main
    ```
-5. Copy everything from your GitHub repo into that folder (or just `git
-   remote add hf <hf-url>` and push to both). Make sure the HF Space's
-   `README.md` is the one from this project (with the YAML frontmatter
-   specifying `sdk: streamlit`). HF will offer to overwrite its default — let it.
-6. In the HF Space's web UI: **Settings → Variables and secrets → New
-   secret**. Name: `OPENAI_API_KEY`. Value: your key. Save.
-7. Push:
-   ```bash
-   cd hf-space
-   git add .
-   git commit -m "Deploy study agent"
-   git push
-   ```
-8. Watch the **Logs** tab on the HF Space page. First build takes ~2–4
-   minutes (pip install). When it's done, the **App** tab shows your live
-   UI.
+   HF will prompt for your username + a write token
+   (https://huggingface.co/settings/tokens → New token, type: write).
+   Cache credentials or use the token as the password.
+5. Watch the **Logs** tab on the Space page. First Docker build takes ~3–5
+   minutes. When it flips to the **App** tab showing your UI, you're live.
 
 Your public URL:
-`https://huggingface.co/spaces/<your-username>/study-agent`
-
-(You can also grab the direct iframe URL ending in `.hf.space` from the
-Space page.)
+`https://huggingface.co/spaces/<your-hf-username>/study-agent`
 
 ## Step 6 — Fill in the report placeholders
 
@@ -141,8 +135,10 @@ Local: you didn't copy `.env.example` to `.env`, or you didn't restart
 saved it. Restart the Space from Settings.
 
 **HF Space build fails.**
-Check **Logs**. Most common cause: `duckduckgo_search` version conflict. If
-so, bump it in `requirements.txt` and re-push.
+Check the **Logs** tab. Most common causes: a `duckduckgo_search` version
+conflict (bump the pin in `requirements.txt` and re-push) or a Docker
+build error — read the log, fix the `Dockerfile`, commit, `git push hf main`
+again.
 
 **The Traces tab is empty on HF.**
 The free tier's container restarts wipe `data/` unless persistent storage is

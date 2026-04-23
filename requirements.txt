@@ -1,7 +1,4 @@
-# NOTE: For Hugging Face Spaces Streamlit SDK, omit streamlit from here --
-# HF installs the version declared in the README.md frontmatter (`sdk_version`).
-# If deploying elsewhere (Streamlit Cloud, local), uncomment the next line.
-# streamlit==1.38.0
+streamlit==1.38.0
 openai==1.54.3
 httpx<0.28
 pypdf==5.1.0

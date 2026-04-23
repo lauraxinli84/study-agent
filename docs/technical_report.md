@@ -306,13 +306,19 @@ per turn. I flagged this in §g below.
 
 ## h. Deployment
 
-- **Platform**: Hugging Face Spaces, Streamlit SDK, free CPU tier.
+- **Platform**: Hugging Face Spaces, **Docker SDK**, free CPU tier.
 - **URL**: *(fill in once the Space is deployed)*.
-- **Config**: `README.md` YAML frontmatter specifies `sdk: streamlit` and
-  `sdk_version: 1.38.0`. Streamlit is intentionally *not* listed in
-  `requirements.txt` — HF installs the declared version itself.
+- **Config**: `README.md` YAML frontmatter specifies `sdk: docker` and
+  `app_port: 7860`. A `Dockerfile` in the repo root builds a Python 3.11
+  slim image, installs `requirements.txt` (which includes
+  `streamlit==1.38.0`), creates a UID-1000 user as HF requires, and
+  launches `streamlit run app.py`.
+- **Why Docker rather than the Streamlit SDK**: HF's new-space UI dropped
+  Streamlit from the SDK picker. Docker gives full control over the
+  runtime, honours `app_port`, and is the forward-compatible option.
 - **Secrets**: `OPENAI_API_KEY` is set as a Space secret under Settings →
-  Variables and secrets. It is never committed.
+  Variables and secrets. It is injected into the container at runtime and
+  is never committed.
 - **State**: The `data/` directory (vectorstore pickle and traces DB) is
   ephemeral on the free tier — it persists across restarts of the same
   container but not across Space rebuilds. For a graded demo this is fine;

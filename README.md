@@ -3,9 +3,8 @@ title: Study Agent
 emoji: 📚
 colorFrom: blue
 colorTo: indigo
-sdk: streamlit
-sdk_version: 1.38.0
-app_file: app.py
+sdk: docker
+app_port: 7860
 pinned: false
 license: mit
 short_description: An agentic LLM study assistant grounded in your course materials.
@@ -91,6 +90,7 @@ greeting uses no tools at all. This is verified by the eval harness.
 │   ├── uploads/                # user-uploaded files
 │   ├── vectorstore/store.pkl   # pickled embeddings
 │   └── traces.db               # SQLite trace log
+├── Dockerfile                  # HF Docker Space entrypoint
 ├── requirements.txt
 ├── .env.example
 └── README.md
@@ -103,9 +103,7 @@ git clone <this repo>
 cd study-agent
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 
-# Install deps. On Hugging Face Spaces the Streamlit SDK is auto-provided,
-# so streamlit is commented out in requirements.txt. Locally, install it too:
-pip install -r requirements.txt streamlit==1.38.0
+pip install -r requirements.txt
 
 cp .env.example .env
 # edit .env and set OPENAI_API_KEY=sk-...
@@ -129,13 +127,24 @@ Do not commit secrets. `.env` is gitignored.
 
 ## Deploy to Hugging Face Spaces
 
+This project ships with a Dockerfile so it runs as a **Docker Space** on HF
+(the UI dropped Streamlit from the SDK picker; Docker gives us full control
+and honours the `app_port` in the README frontmatter).
+
 1. Create a free account at https://huggingface.co.
-2. Click **New Space** → SDK = **Streamlit** → choose a name → Create.
-3. `git clone` the Space repo locally, copy all files from this repo into it, commit, push.
-4. In the Space's **Settings → Variables and secrets**, add a **secret** named
-   `OPENAI_API_KEY` with your key as the value.
-5. The Space rebuilds automatically and goes live at
-   `https://huggingface.co/spaces/<your-username>/<space-name>`.
+2. Click **New Space** → SDK = **Docker** → Template = **Blank** → choose a
+   name → Create.
+3. In the Space's **Settings → Variables and secrets**, add a **secret**
+   named `OPENAI_API_KEY` with your key as the value.
+4. Push this repo to the Space's Git remote (add it alongside your GitHub
+   remote):
+   ```bash
+   git remote add hf https://huggingface.co/spaces/<username>/<space-name>
+   git push hf main
+   ```
+5. HF builds the image from the `Dockerfile` (~3–4 min on first push).
+   When the build succeeds the app goes live at
+   `https://huggingface.co/spaces/<username>/<space-name>`.
 
 ## Run the evaluation
 
