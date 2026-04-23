@@ -4,8 +4,8 @@ Lightweight SQLite-backed tracer.
 Captures one row per agent "run" (a single user message -> final answer cycle)
 and one row per "event" inside that run (LLM call, tool call, error).
 
-Chosen over Langfuse/LangSmith so the project has zero external SaaS dependency
-and no account is needed to inspect logs -- the grader can just download traces.db.
+Chosen over Langfuse/LangSmith for zero external SaaS dependency: no account
+is needed to inspect logs -- the SQLite file is portable and self-contained.
 """
 from __future__ import annotations
 

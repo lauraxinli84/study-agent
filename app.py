@@ -194,7 +194,7 @@ with tab_traces:
     st.subheader("Observability")
     st.caption(
         "Every agent run is logged to SQLite. This tab reads from that DB — "
-        "the same data a grader or developer would inspect in production."
+        "the same data a developer would inspect when debugging the system."
     )
 
     stats = aggregate_stats()

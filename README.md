@@ -16,16 +16,35 @@ An agentic LLM-based study assistant. Upload your course materials, then ask
 questions — the agent decides whether to search your documents, search the web,
 do math, or generate a practice quiz.
 
-Built for a class final project demonstrating:
+Highlights:
 
 - a genuine agentic tool-calling loop (LLM chooses among 4 tools, with chaining)
 - lightweight custom observability (SQLite trace log)
 - a labeled evaluation harness with two headline metrics
-- public deployment on Hugging Face Spaces
+- public deployment on Hugging Face Spaces (Docker SDK)
 
 ## Live demo
 
 https://huggingface.co/spaces/stevenlx96/study-agent
+
+### Quick test path (≈ 2 minutes)
+
+1. Open the **Documents** tab and upload [`eval/sample_notes.md`](eval/sample_notes.md)
+   from this repo (a tiny ML-notes file).
+2. Switch to **Chat** and try one prompt per tool to see the agent route correctly:
+   - *"According to my notes, what is gradient descent?"* → calls
+     `search_course_materials`, returns a citation `[sample_notes.md (chunk 0)]`.
+   - *"What is sqrt(2) times log(1000) to 4 decimal places?"* → calls `calculator`.
+   - *"Quiz me on backpropagation."* → calls `generate_quiz`.
+   - *"Who won the most recent Nobel Prize in Physics?"* → calls `web_search`.
+   - *"Hi, what can you help me with?"* → no tool, direct answer.
+3. Open the **Traces** tab to see every run logged with per-event timing,
+   inputs, and outputs.
+
+> The free Hugging Face tier sleeps the Space after inactivity, so the
+> first request may take 10–20 s to cold-start. Uploads are also wiped on
+> Space rebuilds — re-upload `sample_notes.md` if the sidebar shows no
+> indexed documents.
 
 ## What makes it "agentic"
 

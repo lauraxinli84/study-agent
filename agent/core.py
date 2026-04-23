@@ -7,9 +7,6 @@ The LLM is given four tools and decides autonomously:
   - what arguments to pass
   - whether to chain tool calls (e.g. search materials -> calculator)
   - when it has enough info to write a final answer
-
-This is the "genuine agentic decision-making" the project rubric requires:
-different inputs produce different tool trajectories.
 """
 from __future__ import annotations
 

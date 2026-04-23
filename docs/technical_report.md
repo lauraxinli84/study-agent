@@ -1,8 +1,10 @@
 # Technical Report: Study Agent
 
 An agentic LLM-based web application that helps a student learn from their own
-uploaded course materials. Built for the course's final project; this report
-maps directly to rubric sections a–i.
+uploaded course materials.
+
+- **Live demo:** https://huggingface.co/spaces/stevenlx96/study-agent
+- **Source:** GitHub repository (see submission)
 
 ---
 
@@ -67,8 +69,8 @@ pipeline on our side.
 
 ## c. Why the System is Agentic
 
-Per the rubric, an agentic system must have the LLM genuinely deciding what
-happens next. Here, on every turn the LLM controls:
+An agentic system requires the LLM to genuinely decide what happens next.
+On every turn, the LLM in this system controls:
 
 - **Whether** to use any tool (could answer directly — and does, for casual
   questions; confirmed in the eval scenarios `s9`, `s10`, `s12`).
@@ -93,15 +95,15 @@ rendering. The LLM controls every routing decision.
 
 | Area | Choice | Why |
 |---|---|---|
-| LLM | OpenAI `gpt-4o-mini` (default, overridable via env var) | User indicated OpenAI access; `gpt-4o-mini` has solid tool-calling reliability at very low cost (project-friendly). |
-| Tool-calling API | Chat Completions + `tools=[…]`, `tool_choice="auto"` | The most stable, best-documented, and universally supported pattern. Responses API and the Agents SDK would also work but add deployment surface area without changing what the rubric rewards. |
+| LLM | OpenAI `gpt-4o-mini` (default, overridable via env var) | Solid tool-calling reliability at very low cost. |
+| Tool-calling API | Chat Completions + `tools=[…]`, `tool_choice="auto"` | The most stable, best-documented, and universally supported pattern. The Responses API or the Agents SDK would also work but add deployment surface area without changing what matters for an agent of this size. |
 | Embeddings | `text-embedding-3-small` | Cheap, good recall for small corpora; 1536 dims fits easily in memory. |
 | Vector store | scikit-learn cosine similarity over a numpy matrix, pickled to disk | Zero external service. Course-size corpora (< few thousand chunks) don't justify Pinecone / Weaviate / pgvector complexity. |
-| Orchestration | Hand-written loop | LangGraph / CrewAI add abstraction that the project rubric doesn't reward and that make the control flow harder to reason about for an eval. A ~60-line loop is easier to trace, debug, and explain. |
+| Orchestration | Hand-written loop | LangGraph / CrewAI add abstraction that obscures the control flow without buying anything for a 4-tool agent. A ~60-line loop is easier to trace, debug, and explain. |
 | Web-search tool | `duckduckgo-search` | No API key required — keeps the deployment story to a single secret. |
-| Observability | Custom SQLite tracer | Avoids a SaaS signup dependency for the grader, data is portable (DB file can be downloaded), and it was trivial to wire both writes (`Tracer.event(...)` context manager) and reads (Traces tab + eval harness). |
+| Observability | Custom SQLite tracer | Avoids a SaaS signup dependency, data is portable (DB file can be downloaded), and it was trivial to wire both writes (`Tracer.event(...)` context manager) and reads (Traces tab + eval harness). |
 | UI | Streamlit | One file, zero front-end plumbing, works out of the box with HF Spaces. |
-| Deployment | Hugging Face Spaces (Streamlit SDK) | Free CPU tier, no credit card, git-push workflow, handles HTTPS + the public URL automatically. |
+| Deployment | Hugging Face Spaces, Docker SDK | Free CPU tier, no credit card, git-push workflow, handles HTTPS + the public URL automatically. Docker (rather than the legacy Streamlit SDK) gives full control of the runtime. |
 | Secrets | `OPENAI_API_KEY` as a Space secret; `.env` for local | Standard, no key in repo. |
 
 ## e. Observability
@@ -136,7 +138,7 @@ content + tool_calls returned, finish reason, latency), every tool dispatch
 
 ## f. Metrics
 
-Two metrics, one per category as the rubric suggests:
+Two metrics — one for output quality, one for system behavior:
 
 ### 1. Tool-selection accuracy (quality)
 
@@ -213,10 +215,14 @@ Headline numbers from running `python -m eval.run_eval` against live
 | Average tool precision | 1.00 |
 | Average tool recall | 1.00 |
 | Errors | 0 |
-| Mean latency | 5344 ms |
-| Median latency | 5072 ms |
-| p95 latency | 11237 ms |
-| Max latency | 13267 ms |
+| Mean latency | 5979 ms |
+| Median latency | 4589 ms |
+| p95 latency | 16055 ms |
+| Max latency | 17151 ms |
+
+(Latency is dominated by network round-trips to OpenAI and DuckDuckGo;
+absolute numbers vary run-to-run by ~20%, but the relative ordering across
+scenarios is stable.)
 
 **Per-scenario trajectories that matter:**
 
@@ -226,8 +232,8 @@ Headline numbers from running `python -m eval.run_eval` against live
   model to sequence two different tools and it got it right.
 - `s12_negative_no_web_for_stable_fact` ("capital of France") produced **no**
   tool calls at 484 ms — the model correctly suppressed the over-tooling
-  failure mode I was most worried about.
-- `s7` and `s8` (quiz requests) dominate the latency tail (11.2 s and 13.3
+  failure mode this scenario is designed to catch.
+- `s7` and `s8` (quiz requests) dominate the latency tail (typically 10–17
   s) because `generate_quiz` internally makes its own LLM call with
   retrieved passages as context. This accounts for the p95.
 
@@ -243,7 +249,7 @@ the agent sometimes *repeats* a correct tool before answering:
 These are correct routing decisions (still the expected tool), so they
 pass the headline metric — but they burn extra tokens and latency. A
 cheap fix would be a de-duplication cache or a one-shot budget per tool
-per turn. I flagged this in §g below.
+per turn. This is flagged in the *What I'd improve* list below.
 
 ### Known strengths
 

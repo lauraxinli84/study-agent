@@ -1,13 +1,13 @@
 id,question,expected_tools,actual_tools,exact_match,precision,recall,latency_ms,error,run_id
-s1_materials_question,"According to the uploaded notes, what is gradient descent?",search_course_materials,search_course_materials,True,1.0,1.0,3783,,d668cda2-a3ad-453d-be50-4429ec85e74e
-s2_materials_followup,Can you explain the chain rule using the uploaded textbook chapter?,search_course_materials,search_course_materials,True,1.0,1.0,4871,,e934fc1b-2492-4a30-84a0-dd6b7942f7e4
-s3_current_events,Who won the most recent Nobel Prize in Physics?,web_search,web_search|web_search,True,1.0,1.0,3569,,ad342fa3-0192-4717-b020-40258c6da35e
-s4_outside_knowledge,What is the latest version of PyTorch as of 2026?,web_search,web_search,True,1.0,1.0,2374,,ef616409-836d-4246-a6cc-13fc7581e217
-s5_arithmetic,What is sqrt(2) times log(1000) to 4 decimal places?,calculator,calculator,True,1.0,1.0,1394,,b370f8b9-cdec-49fb-896f-5358e78c9232
-s6_multistep_math_in_materials,"Using the learning rate from the notes, if we do 50 gradient steps of size 0.01, how far do we move in the worst case?",calculator|search_course_materials,search_course_materials|calculator,True,1.0,1.0,3538,,31dcc816-5d16-4853-987f-41bfe1219095
-s7_quiz_request,Quiz me on backpropagation.,generate_quiz,generate_quiz,True,1.0,1.0,12898,,8d700576-d0a1-4b84-bedb-ae2905dd320f
-s8_quiz_alt_phrasing,Can you test me on the main ideas of chapter 2?,generate_quiz,generate_quiz,True,1.0,1.0,16517,,1fef8fe6-18ff-4585-98bb-361a2980f808
-s9_no_tool_needed,What are some good study habits for learning a new topic?,,,True,1.0,1.0,4848,,86479777-5dca-46ee-8bb4-25a5c39b6845
-s10_no_tool_conversational,Hi! What can you help me with?,,,True,1.0,1.0,1041,,917d9b3c-848f-44b4-b98c-78b044c2741a
-s11_ambiguous_prefers_materials,Explain the main loss function we covered.,search_course_materials,search_course_materials|search_course_materials|search_course_materials|search_course_materials,True,1.0,1.0,8843,,ace85ed7-8c13-4f4c-bb83-0dede90a8bc1
-s12_negative_no_web_for_stable_fact,What is the capital of France?,,,True,1.0,1.0,523,,70114595-ec9f-40fa-bf98-459f65d6687b
+s1_materials_question,"According to the uploaded notes, what is gradient descent?",search_course_materials,search_course_materials,True,1.0,1.0,4330,,27afb190-44c1-4cae-b505-590f6211520e
+s2_materials_followup,Can you explain the chain rule using the uploaded textbook chapter?,search_course_materials,search_course_materials,True,1.0,1.0,4813,,83300908-4d39-4ffc-98c2-bf248cb8134c
+s3_current_events,Who won the most recent Nobel Prize in Physics?,web_search,web_search|web_search,True,1.0,1.0,5099,,91d2e75d-fcf6-4698-a0a1-765bfca57dc4
+s4_outside_knowledge,What is the latest version of PyTorch as of 2026?,web_search,web_search,True,1.0,1.0,2691,,252ffb6e-0eee-4a54-8784-1b80293e26df
+s5_arithmetic,What is sqrt(2) times log(1000) to 4 decimal places?,calculator,calculator,True,1.0,1.0,2142,,e9a55d5b-f7cb-4516-8fac-f2d9076ffe7c
+s6_multistep_math_in_materials,"Using the learning rate from the notes, if we do 50 gradient steps of size 0.01, how far do we move in the worst case?",calculator|search_course_materials,search_course_materials|calculator,True,1.0,1.0,4365,,48692e4e-ec9f-4d98-84be-f703393e1ecb
+s7_quiz_request,Quiz me on backpropagation.,generate_quiz,generate_quiz,True,1.0,1.0,16055,,bf528a62-0a3d-4f36-b0a0-2f553fd2e8da
+s8_quiz_alt_phrasing,Can you test me on the main ideas of chapter 2?,generate_quiz,generate_quiz,True,1.0,1.0,17151,,714fc574-085a-407d-a42e-977e462f7822
+s9_no_tool_needed,What are some good study habits for learning a new topic?,,,True,1.0,1.0,5426,,bb28785b-ecb1-4cc5-9ff4-4e23fc44f87e
+s10_no_tool_conversational,Hi! What can you help me with?,,,True,1.0,1.0,1100,,8b1cd91e-54cb-4962-a64c-3609fa622433
+s11_ambiguous_prefers_materials,Explain the main loss function we covered.,search_course_materials,search_course_materials|search_course_materials|search_course_materials,True,1.0,1.0,8139,,fbae63aa-cb54-4fd9-aa6d-64a34a5884b2
+s12_negative_no_web_for_stable_fact,What is the capital of France?,,,True,1.0,1.0,437,,9b98db61-6941-4e63-8ce9-efbdf0e96d8b
