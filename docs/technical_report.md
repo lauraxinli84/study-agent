@@ -4,7 +4,7 @@ An agentic LLM-based web application that helps a student learn from their own
 uploaded course materials.
 
 - **Live demo:** https://huggingface.co/spaces/lauraxinli84/study-agent
-- **Source:** GitHub repository (see submission)
+- **Source:** https://github.com/lauraxinli84/study-agent
 
 ---
 
