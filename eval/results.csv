@@ -1,0 +1,13 @@
+id,question,expected_tools,actual_tools,exact_match,precision,recall,latency_ms,error,run_id
+s1_materials_question,"According to the uploaded notes, what is gradient descent?",search_course_materials,search_course_materials,True,1.0,1.0,5461,,f433332d-fcfe-4ff8-bf79-c3d47e6ce5a2
+s2_materials_followup,Can you explain the chain rule using the uploaded textbook chapter?,search_course_materials,search_course_materials,True,1.0,1.0,5836,,02731f4e-91c3-4c46-838b-4885a647c0a9
+s3_current_events,Who won the most recent Nobel Prize in Physics?,web_search,web_search|web_search,True,1.0,1.0,6049,,e34c3132-1d2c-46c0-9356-acc20c329b5d
+s4_outside_knowledge,What is the latest version of PyTorch as of 2026?,web_search,web_search,True,1.0,1.0,2680,,23f98590-6774-4793-9d4d-7c91111fa1d8
+s5_arithmetic,What is sqrt(2) times log(1000) to 4 decimal places?,calculator,calculator,True,1.0,1.0,1872,,7e46e2b1-84fd-44d2-8c44-f46b98ba4e1e
+s6_multistep_math_in_materials,"Using the learning rate from the notes, if we do 50 gradient steps of size 0.01, how far do we move in the worst case?",calculator|search_course_materials,search_course_materials|calculator,True,1.0,1.0,2328,,76e55969-5b40-4a9f-aa20-58b244eb1060
+s7_quiz_request,Quiz me on backpropagation.,generate_quiz,generate_quiz,True,1.0,1.0,11237,,5750b10a-5635-4510-8b1b-eeeab8fcd4f4
+s8_quiz_alt_phrasing,Can you test me on the main ideas of chapter 2?,generate_quiz,generate_quiz,True,1.0,1.0,13267,,d976899b-7df1-4cc2-a35b-d58d4accea95
+s9_no_tool_needed,What are some good study habits for learning a new topic?,,,True,1.0,1.0,4682,,2e543e0b-9919-46d8-a5ab-a96a60629fc1
+s10_no_tool_conversational,Hi! What can you help me with?,,,True,1.0,1.0,1116,,20c4f0cc-ddf5-468b-952a-f0c676770238
+s11_ambiguous_prefers_materials,Explain the main loss function we covered.,search_course_materials,search_course_materials|search_course_materials|search_course_materials,True,1.0,1.0,9123,,2f8a3c77-1ec2-4390-8032-3bca59713b5f
+s12_negative_no_web_for_stable_fact,What is the capital of France?,,,True,1.0,1.0,484,,7e23306b-fe16-45a6-9f2b-5d98f22a0f94

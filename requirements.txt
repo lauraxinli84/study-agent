@@ -3,6 +3,7 @@
 # If deploying elsewhere (Streamlit Cloud, local), uncomment the next line.
 # streamlit==1.38.0
 openai==1.54.3
+httpx<0.28
 pypdf==5.1.0
 numpy==1.26.4
 scikit-learn==1.5.2

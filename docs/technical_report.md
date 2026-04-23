@@ -202,21 +202,48 @@ python -m eval.run_eval
 
 Produces `eval/results.csv` and a printed summary.
 
-### Expected results and interpretation
+### Results
 
-*(I was not able to execute the harness against the live OpenAI API from the
-development environment this project was built in. The harness is wired end
-to end and tested at the import and tracer level; run it once locally to
-populate the numbers below.)*
+Headline numbers from running `python -m eval.run_eval` against live
+`gpt-4o-mini` on all 12 scenarios (see `eval/results.csv` for per-row detail):
 
-Rough qualitative expectations based on prior experience with `gpt-4o-mini`
-+ tool-calling:
+| Metric | Value |
+|---|---|
+| Tool-selection accuracy (exact set match) | **1.00** (12 / 12) |
+| Average tool precision | 1.00 |
+| Average tool recall | 1.00 |
+| Errors | 0 |
+| Mean latency | 5344 ms |
+| Median latency | 5072 ms |
+| p95 latency | 11237 ms |
+| Max latency | 13267 ms |
 
-- Tool-selection accuracy: ~0.80–0.90 on this scenario set. The most common
-  failure mode is over-tooling — the model calls `web_search` on a general
-  question it could have answered directly (scenario `s12`-style).
-- Latency: single-tool runs typically 1.5–3 s, chained runs 3–6 s. p95
-  should stay under ~8 s.
+**Per-scenario trajectories that matter:**
+
+- `s6_multistep_math_in_materials` correctly chained
+  `search_course_materials` → `calculator` in that order (retrieve the
+  learning rate, then compute). This is the only scenario that forces the
+  model to sequence two different tools and it got it right.
+- `s12_negative_no_web_for_stable_fact` ("capital of France") produced **no**
+  tool calls at 484 ms — the model correctly suppressed the over-tooling
+  failure mode I was most worried about.
+- `s7` and `s8` (quiz requests) dominate the latency tail (11.2 s and 13.3
+  s) because `generate_quiz` internally makes its own LLM call with
+  retrieved passages as context. This accounts for the p95.
+
+### Observed imperfections despite a perfect tool-set score
+
+Exact-set match gives 100%, but watching the `actual_tools` column shows
+the agent sometimes *repeats* a correct tool before answering:
+
+- `s3_current_events` called `web_search` twice (refining the Nobel query).
+- `s11_ambiguous_prefers_materials` called `search_course_materials`
+  three times, presumably reformulating to find the loss-function passage.
+
+These are correct routing decisions (still the expected tool), so they
+pass the headline metric — but they burn extra tokens and latency. A
+cheap fix would be a de-duplication cache or a one-shot budget per tool
+per turn. I flagged this in §g below.
 
 ### Known strengths
 
@@ -271,6 +298,11 @@ Rough qualitative expectations based on prior experience with `gpt-4o-mini`
    actual chunk the retriever returned this turn.
 4. Add **streaming** so the user sees tokens as they're produced.
 5. Swap `duckduckgo_search` for a keyed search API for reliability.
+6. **Tool-call deduplication**: the eval showed the agent occasionally
+   invokes the same tool 2–3 times in one turn with slightly different
+   arguments (see scenarios `s3` and `s11`). A per-turn cache keyed on
+   `(tool_name, normalized_args)` would cut latency without changing the
+   headline metric.
 
 ## h. Deployment
 
